@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# AWS
+.aws/
+
+# Logs
+*.log
+
+# Docker
+.env
+docker-compose.override.yml
+
+# VS Code
+.vscode/
+
+# Linux
+*.swp
