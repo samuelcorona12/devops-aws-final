@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Infraestructura DevOps AWS Academy
+
+Resources:
+
+  DevOpsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      VersioningConfiguration:
+        Status: Enabled
+
+Outputs:
+
+  BucketName:
+    Description: Nombre del bucket
+    Value: !Ref DevOpsBucket
+
