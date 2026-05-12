@@ -1,0 +1,1 @@
+{"statusCode": 200, "body": "{\"mensaje\": \"API Gateway conectado con Lambda\", \"servicio\": \"microservicio-devops\"}"}
