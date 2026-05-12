@@ -1,0 +1,15 @@
+{
+    "Rules": [
+        {
+            "ID": "EliminarObjetos30Dias",
+            "Filter": {
+                "Prefix": ""
+            },
+            "Status": "Enabled",
+            "Expiration": {
+                "Days": 30
+            }
+        }
+    ]
+}
+
