@@ -1,0 +1,62 @@
+name: DevOps Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Instalar Flask
+        run: |
+          pip install flask==2.3.3
+
+      - name: Verificar aplicación
+        run: |
+          python -c "from docker.app import app"
+
+  deploy:
+
+    needs: test
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar credenciales AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+
+      - name: Crear archivo comprimido
+        run: |
+          zip -r app.zip .
+
+      - name: Subir a S3
+        run: |
+          aws s3 cp app.zip s3://$(aws s3api list-buckets --query "Buckets[0].Name" --output text)/app.zip
+
+      - name: Verificar conexión AWS
+        run: |
+          aws sts get-caller-identity
+
